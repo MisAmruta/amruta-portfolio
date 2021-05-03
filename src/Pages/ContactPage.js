@@ -7,11 +7,26 @@ import PhoneIcon from '@material-ui/icons/Phone';
 import EmailIcon from '@material-ui/icons/Email';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import ContactItem from '../Components/ContactItem';
+import emailjs from 'emailjs-com';
 
 function ContactPage() {
     const phone = <PhoneIcon />
     const email = <EmailIcon />
     const location = <LocationOnIcon />
+
+    function sendEmail(e){
+        e.preventDefault();
+
+        emailjs.sendForm('service_e9u1hx5', 'template_hnou0h8', e.target, 'user_Q9xJoW8ySh1Sk0JSm06iz')
+          .then((result) => {
+            alert('Thank you for contacting me, I will get back to you soon!!!')
+          }, (error) => {
+             
+            alert('Oops something wrong happened : ', error.text)
+          });
+          e.target.reset()
+    }
+
     return (
         <MainLayout>
             <Title title={'Contact'} span={'Contact'} />
@@ -21,25 +36,26 @@ function ContactPage() {
                     <div className="contact-title">
                         <h4>Get In Touch</h4>
                     </div>
-                    <form  className="form">
+                    <form  className="form" onSubmit={(e)=>sendEmail(e)}>
                         <div className="form-field">
                             <label htmlFor="name"  >Enter your name*</label>
-                            <input type="text" id="name" />
+                            <input type="text" name="name" />
                         </div>
                         <div className="form-field">
                             <label htmlFor="email"  >Enter your email*</label>
-                            <input type="email" id="email" />
+                            <input type="email" name="email" />
                         </div>
                         <div className="form-field">
                             <label htmlFor="subject"  >Enter your subject</label>
-                            <input type="text" id="subject" />
+                            <input type="text" name="subject" />
                         </div>
                         <div className="form-field">
                             <label htmlFor="text-area">Enter your Message*</label>
-                            <textarea name="textarea" id="textarea" cols="30" rows="10"></textarea>
+                            <textarea name="textarea" name="message" cols="30" rows="10"></textarea>
                         </div>
                         <div className="form-field f-button">
-                            <PrimaryButton title={'Send Email'} />
+                            {/* <PrimaryButton title={'Send Email'} /> */}
+                            <button type="submit" >Send Email</button>
                         </div>
                     </form>
                 </div>
@@ -115,6 +131,33 @@ const ContactPageStyled = styled.section`
                     width: 100%;
                     padding: .8rem 1rem;
                 }
+
+                button{
+                    
+                    background-color: var(--primary-color);
+                    padding: .8rem 2.5rem;
+                    color: white;
+                    cursor: pointer;
+                    display: inline-block;
+                    font-size: inherit;
+                    text-transform: uppercase;
+                    position: relative;
+                    transition: all .4s ease-in-out;
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        width: 0;
+                        height: .2rem;
+                        transition: all .4s ease-in-out;
+                        left: 0;
+                        bottom: 0;
+                        opacity: .7;
+                    }
+                    &:hover::after{
+                        width: 100%;
+                        background-color: var(--white-color);
+                    }
+                                }
             }
 
             

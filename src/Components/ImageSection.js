@@ -6,6 +6,7 @@ import axios from 'axios'
 
 function ImageSection() {
     const downloadCV =  (e) => {
+        alert("Please wait, download will start soon!!!")
         axios({
             method: 'get',
             url: 'https://resume-download.herokuapp.com/resume-download/',
@@ -22,7 +23,7 @@ function ImageSection() {
                 document.body.appendChild(link);
                 link.click();
  
-                console.log(res)
+                alert("CV downloaded successfully, Thank you for your patience!!")
             })
             .catch((error) => {
                 alert(error);
